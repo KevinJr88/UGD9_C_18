@@ -488,6 +488,7 @@ public class KendaraanView extends javax.swing.JFrame {
         setComponent(true);
         idInput.setEnabled(false);
         action = "Ubah";
+        
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
@@ -501,6 +502,9 @@ public class KendaraanView extends javax.swing.JFrame {
                 clearText();
                 showMobilText();
                 showMotorText();
+                setEditDeleteBtn(false);
+                motorCheck.setSelected(false);
+                mobilCheck.setSelected(false);
                 JOptionPane.showMessageDialog(null, "Data terhapus !");
                 
             } catch(Exception e){
@@ -534,7 +538,15 @@ public class KendaraanView extends javax.swing.JFrame {
                 tahunInput.setText(String.valueOf(kendaraan.getTahunPembuatan()));
                 platInput.setText(kendaraan.getNoPlat());
                 jmlInput.setText(String.valueOf(kendaraan.getJumlah_penumpang()));
-                platInput.setText(kendaraan.getJenis_tak());
+                takInput.setText(kendaraan.getJenis_tak());
+                
+                if(kendaraan.getJenis().equalsIgnoreCase("Mobil")){
+                    motorCheck.setSelected(false);
+                    mobilCheck.setSelected(true);
+                } else {
+                    motorCheck.setSelected(true);
+                    mobilCheck.setSelected(false);
+                }
             }
             
         } catch(Exception e){
@@ -590,6 +602,7 @@ public class KendaraanView extends javax.swing.JFrame {
             showMotorText();
             setComponent(false);
             setEditDeleteBtn(false);
+            
         }catch(IdException e){
             JOptionPane.showMessageDialog(this, e.message());
         } /*catch(JenisException e1){
@@ -601,6 +614,8 @@ public class KendaraanView extends javax.swing.JFrame {
         // TODO add your handling code here:
         setComponent(false);
         setEditDeleteBtn(false);
+        motorCheck.setSelected(false);
+        mobilCheck.setSelected(false);
         clearText();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
