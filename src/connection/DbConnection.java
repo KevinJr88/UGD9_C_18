@@ -2,13 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
+/*
+Kevin Julian Rahadinata - 210711024
+Michael Kevin Kimyuwono - 210711056
+*/
+
 package connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
-/**
- *
- * @author julia
- */
+
+
 public class DbConnection {
     public static Connection CON;
     public static final String URL = "jdbc:mysql://";

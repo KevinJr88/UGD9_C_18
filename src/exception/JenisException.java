@@ -4,11 +4,12 @@
  */
 package exception;
 
-/**
- *
- * @author julia
- */
-public class JenisException {
+/*
+Kevin Julian Rahadinata - 210711024
+Michael Kevin Kimyuwono - 210711056
+*/
+
+public class JenisException extends Exception{
     public String message(){
         return "Jenis Kendaraan Harus di Pilih Salah Satu (Mobil atau Motor)";
     }

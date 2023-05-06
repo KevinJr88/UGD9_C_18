@@ -4,10 +4,11 @@
  */
 package model;
 
-/**
- *
- * @author julia
- */
+/*
+Kevin Julian Rahadinata - 210711024
+Michael Kevin Kimyuwono - 210711056
+*/
+
 public class Kendaraan {
     private String id;
     private String merk;
@@ -20,7 +21,7 @@ public class Kendaraan {
     private String jenis_tak;
     
     public Kendaraan(String id, String merk, String jenis, int tahunPembuatan,
-            String noPlat, int jumlah_penumpang, String jenis_tak){
+            String noPlat, int jumlah_penumpang, String jenis_tak) {
         this.id = id;
         this.merk = merk;
         this.jenis = jenis;
@@ -95,7 +96,7 @@ public class Kendaraan {
                       "\nMerk : " + this.merk +
                       "\nTahun : " + this.tahunPembuatan +
                       "\nNomor : " + this.noPlat +
-                      "\nJumlah Penumpang : " + this.jumlah_penumpang + "\n\n";  
+                      "\nJumlah Penumpang : " + this.jumlah_penumpang + "\n";  
             } else{
                 return "";
             }
@@ -106,7 +107,7 @@ public class Kendaraan {
                     "\nMerk : " + this.merk +
                     "\nTahun : " + this.tahunPembuatan +
                     "\nNomor : " + this.noPlat +
-                    "\nJenis Motor : " + this.jenis_tak + "\n\n";   
+                    "\nJenis Motor : " + this.jenis_tak + "\n";   
             } else{
                 return "";
             }

@@ -2,11 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
+/*
+Kevin Julian Rahadinata - 210711024
+Michael Kevin Kimyuwono - 210711056
+*/
+
 package view;
 
 import control.KendaraanControl;
 import exception.IdException;
 import exception.JenisException;
+import exception.KosongException;
 import javax.swing.JOptionPane;
 import model.Kendaraan;
 /**
@@ -16,7 +23,7 @@ import model.Kendaraan;
 public class KendaraanView extends javax.swing.JFrame {
     private KendaraanControl kendaraanControl;
     String action = null;   
-    String act = null;
+    String act = "";
     /**
      * Creates new form KendaraanView
      */
@@ -63,6 +70,26 @@ public class KendaraanView extends javax.swing.JFrame {
             throw new IdException();
         }
     }
+    
+    public void jenisException() throws JenisException{
+        if(!act.equalsIgnoreCase("Check Mobil") && !act.equalsIgnoreCase("Check Motor")){
+            throw new JenisException();
+        }
+    }
+    
+    public void kosongException() throws KosongException{
+        if(merkInput.getText().isEmpty() == true 
+                || platInput.getText().isEmpty() == true){
+            throw new KosongException();
+        } 
+        
+        if(act.equalsIgnoreCase("Check Motor")){
+            if(takInput.getText().isEmpty() == true){
+                throw new KosongException();
+            }
+        }
+    }
+    
     
     // JENIS EXCEPTION MISSING
     
@@ -112,6 +139,8 @@ public class KendaraanView extends javax.swing.JFrame {
         motorTxtArea = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         mobilTxtArea = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,12 +225,12 @@ public class KendaraanView extends javax.swing.JFrame {
             btnCUD_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnCUD_PanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addBtn)
+                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editBtn)
+                .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         btnCUD_PanelLayout.setVerticalGroup(
             btnCUD_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,9 +264,9 @@ public class KendaraanView extends javax.swing.JFrame {
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchInput)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         searchPanelLayout.setVerticalGroup(
@@ -344,7 +373,7 @@ public class KendaraanView extends javax.swing.JFrame {
                                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(motorCheck)
                                     .addComponent(mobilCheck))))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inputPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(saveBtn)
@@ -404,21 +433,39 @@ public class KendaraanView extends javax.swing.JFrame {
         mobilTxtArea.setRows(5);
         jScrollPane2.setViewportView(mobilTxtArea);
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Data Mobil");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Data Motor");
+
         javax.swing.GroupLayout showPanelLayout = new javax.swing.GroupLayout(showPanel);
         showPanel.setLayout(showPanelLayout);
         showPanelLayout.setHorizontalGroup(
             showPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showPanelLayout.createSequentialGroup()
+            .addGroup(showPanelLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2)
                 .addGap(66, 66, 66)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1)
+                .addGap(62, 62, 62))
+            .addGroup(showPanelLayout.createSequentialGroup()
+                .addGap(153, 153, 153)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(252, 252, 252)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(155, 155, 155))
         );
         showPanelLayout.setVerticalGroup(
             showPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showPanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
+                .addGroup(showPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGap(2, 2, 2)
                 .addGroup(showPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
@@ -444,14 +491,14 @@ public class KendaraanView extends javax.swing.JFrame {
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bodyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCUD_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(searchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(inputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(showPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(showPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout containerPanelLayout = new javax.swing.GroupLayout(containerPanel);
@@ -464,7 +511,7 @@ public class KendaraanView extends javax.swing.JFrame {
         containerPanelLayout.setVerticalGroup(
             containerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(containerPanelLayout.createSequentialGroup()
-                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -489,6 +536,16 @@ public class KendaraanView extends javax.swing.JFrame {
         idInput.setEnabled(false);
         action = "Ubah";
         
+        if(act.equalsIgnoreCase("Check Mobil")){
+            motorCheck.setEnabled(false);
+            mobilCheck.setEnabled(false);
+            takInput.setEnabled(false);
+        } else {
+            mobilCheck.setEnabled(false);
+            motorCheck.setEnabled(false);
+            jmlInput.setEnabled(false);
+        }
+        
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
@@ -502,9 +559,11 @@ public class KendaraanView extends javax.swing.JFrame {
                 clearText();
                 showMobilText();
                 showMotorText();
+                setComponent(false);
                 setEditDeleteBtn(false);
                 motorCheck.setSelected(false);
                 mobilCheck.setSelected(false);
+                act = "";
                 JOptionPane.showMessageDialog(null, "Data terhapus !");
                 
             } catch(Exception e){
@@ -543,9 +602,11 @@ public class KendaraanView extends javax.swing.JFrame {
                 if(kendaraan.getJenis().equalsIgnoreCase("Mobil")){
                     motorCheck.setSelected(false);
                     mobilCheck.setSelected(true);
+                    act = "Check Mobil";
                 } else {
                     motorCheck.setSelected(true);
                     mobilCheck.setSelected(false);
+                    act = "Check Motor";
                 }
             }
             
@@ -562,6 +623,7 @@ public class KendaraanView extends javax.swing.JFrame {
     private void mobilCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mobilCheckActionPerformed
         motorCheck.setEnabled(false);
         motorCheck.setSelected(false);
+        mobilCheck.setEnabled(false);
         takInput.setEnabled(false);
         takInput.setText("");
         act = "Check Mobil";
@@ -571,6 +633,7 @@ public class KendaraanView extends javax.swing.JFrame {
         // TODO add your handling code here:
         mobilCheck.setEnabled(false);
         mobilCheck.setSelected(false);
+        motorCheck.setEnabled(false);
         jmlInput.setEnabled(false);
         jmlInput.setText("");
         act  = "Check Motor";
@@ -580,34 +643,48 @@ public class KendaraanView extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             idException();
-            //jenisException();
+            jenisException();
+            kosongException();
             
             String temp = null;
+            int temp2 = 0;
             
             if(act.equalsIgnoreCase("Check Mobil")){
                 temp = "Mobil";
+                temp2 = Integer.parseInt(jmlInput.getText());
+               
             } else if(act.equalsIgnoreCase("Check Motor")){
                 temp = "Motor";
+                
             }
             Kendaraan k = new Kendaraan(idInput.getText(), merkInput.getText(), temp, Integer.parseInt(tahunInput.getText()), 
-            platInput.getText(), Integer.parseInt(jmlInput.getText()), takInput.getText());
+            platInput.getText(), temp2, takInput.getText());
             
             if(action.equals("Tambah")){
                 kendaraanControl.insertDataKendaraan(k);
             } else{
                 kendaraanControl.updateDataKendaraan(k, idInput.getText());
             }
+            mobilCheck.setEnabled(false);
+            mobilCheck.setSelected(false);
+            motorCheck.setEnabled(false);
+            motorCheck.setSelected(false);
             clearText();
             showMobilText();
             showMotorText();
             setComponent(false);
             setEditDeleteBtn(false);
+            act = "";
             
         }catch(IdException e){
             JOptionPane.showMessageDialog(this, e.message());
-        } /*catch(JenisException e1){
+        } catch(JenisException e1){
             JOptionPane.showMessageDialog(this, e1.message());
-        }*/
+        }catch(NumberFormatException e2){
+            JOptionPane.showMessageDialog(this, "Tahun Pembuatan / Jumlah Penumpang hanya boleh berupa angka !");
+        }catch(KosongException e3){
+            JOptionPane.showMessageDialog(this, e3.message());
+        }
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
@@ -685,6 +762,8 @@ public class KendaraanView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jmlInput;
