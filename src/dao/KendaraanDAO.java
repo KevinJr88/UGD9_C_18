@@ -117,10 +117,10 @@ public class KendaraanDAO {
        
        String sql = "UPDATE kendaraan SET merk = '" + k.getMerk() + "', "
                + "jenis = '" + k.getJenis() + "' "
-               + "tahunPembuatan = '" + k.getTahunPembuatan() + "' "
-               + "noPlat = '" + k.getNoPlat() + "' "
-               + "jumlah_penumpang = '" + k.getJumlah_penumpang() + "' "
-               + "jenis_tak = '" + k.getJenis_tak() + "' "
+               + ",tahunPembuatan = '" + k.getTahunPembuatan() + "' "
+               + ",noPlat = '" + k.getNoPlat() + "' "
+               + ",jumlah_penumpang = '" + k.getJumlah_penumpang() + "' "
+               + ",jenis_tak = '" + k.getJenis_tak() + "' "
                + "WHERE id = '" + idKendaraan + "'";
        
        System.out.println("Editing kendaraan ....");
