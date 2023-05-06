@@ -89,19 +89,27 @@ public class Kendaraan {
     public String showData(boolean i){
         
         if(i == true){
-          return
-                "ID : " + this.id + 
-                "\nMerk : " + this.merk +
-                "\nTahun : " + this.tahunPembuatan +
-                "\nNomor : " + this.noPlat +
-                "\nJumlah Penumpang : " + this.jumlah_penumpang + "\n\n";  
+            if(this.jenis.equalsIgnoreCase("Mobil")){
+                return
+                      "ID : " + this.id + 
+                      "\nMerk : " + this.merk +
+                      "\nTahun : " + this.tahunPembuatan +
+                      "\nNomor : " + this.noPlat +
+                      "\nJumlah Penumpang : " + this.jumlah_penumpang + "\n\n";  
+            } else{
+                return "";
+            }
         } else{
-            return 
-                "ID : " + this.id + 
-                "\nMerk : " + this.merk +
-                "\nTahun : " + this.tahunPembuatan +
-                "\nNomor : " + this.noPlat +
-                "\nJenis Motor : " + this.jenis_tak + "\n\n";
+            if(this.jenis.equalsIgnoreCase("Motor")){
+                return 
+                    "ID : " + this.id + 
+                    "\nMerk : " + this.merk +
+                    "\nTahun : " + this.tahunPembuatan +
+                    "\nNomor : " + this.noPlat +
+                    "\nJenis Motor : " + this.jenis_tak + "\n\n";   
+            } else{
+                return "";
+            }
                  
         }
         

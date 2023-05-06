@@ -22,7 +22,7 @@ public class KendaraanControl {
         List<Kendaraan> dataKendaraan = kDao.showKendaraan();
         String kendaraanString = "";
         for(int i=0 ; i<dataKendaraan.size(); i++){
-            if(value == true){  
+            if(value == true){
                 kendaraanString = kendaraanString + dataKendaraan.get(i).showData(true) + "\n";  
             } else{
                 kendaraanString = kendaraanString + dataKendaraan.get(i).showData(false) + "\n"; 
