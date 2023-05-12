@@ -6,9 +6,8 @@ package model;
 
 /**
  *
- * @author julia
+ * @author kevin
  */
-public class Costumer {
-    //tese
-    //tes
+public class Customer {
+    
 }
