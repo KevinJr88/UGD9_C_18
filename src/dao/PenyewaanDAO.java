@@ -16,6 +16,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.Penyewaan;
+import model.Kendaraan;
+import model.Customer;
 
 public class PenyewaanDAO {
     private DbConnection dbCon = new DbConnection();
@@ -41,5 +43,53 @@ public class PenyewaanDAO {
         dbCon.closeConnection();
     }
     
-    
+    public List<Penyewaan> showPenyewaan(){
+        con = dbCon.makeConnection();
+        
+        String sql = "SELECT * FROM penyewaan";
+        System.out.println("Mengambil data penyewaan...");
+        
+        List<Penyewaan> list = new ArrayList();
+        
+        try{
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            
+            if(rs!=null){
+                while(rs.next()){
+                    Kendaraan k = new Kendaraan(
+                            rs.getString("id"),
+                            rs.getString("model"),
+                            rs.getString("jenis"),
+                            rs.getInt("tahunPembuatan"),
+                            rs.getString("noPlat"),
+                            rs.getInt("jumlah_penumpang"),
+                            rs.getString("jenis_tak")
+                    );
+                    
+                    Customer c = new Customer(
+                            rs.getInt("id"),
+                            rs.getString("nama"),
+                            rs.getString("ktp"),
+                            rs.getString("no_telepon")
+                    );
+                    Penyewaan p = new Penyewaan(
+                            rs.getInt("id"),
+                            rs.getString("lama_sewa"),
+                            rs.getFloat("total_harga"),
+                            rs.getString("fasilitas"),
+                            k,c
+                    );
+                    list.add(p);
+            }
+        }
+        rs.close();
+        statement.close();
+    }catch(Exception e){
+            System.out.println("Error reading database...");
+            System.out.println(e);
+    }
+    dbCon.closeConnection();
+    return list;
+    }
 }
