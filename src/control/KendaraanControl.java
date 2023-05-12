@@ -49,4 +49,18 @@ public class KendaraanControl {
     public void deleteDataKendaraan(String idKendaraan){
         kDao.deleteKendaraan(idKendaraan);
     }
+    
+    public String generateIDMobil(){
+        String temp = null;
+        temp = kDao.generateIDMobil();
+        return temp;
+    }
+    
+    public String generateIDMotor(){
+        String temp = null;
+        temp = kDao.generateIDMotor();
+        return temp;
+    }
+    
+    
 }

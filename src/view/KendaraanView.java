@@ -67,7 +67,7 @@ public class KendaraanView extends javax.swing.JFrame {
     
     public void idException() throws IdException{
         if(idInput.getText().length() < 5 || idInput.getText().length() > 8){
-            throw new IdException();
+           throw new IdException();
         }
     }
     
@@ -626,6 +626,7 @@ public class KendaraanView extends javax.swing.JFrame {
         mobilCheck.setEnabled(false);
         takInput.setEnabled(false);
         takInput.setText("");
+        idInput.setText(kendaraanControl.generateIDMobil());
         act = "Check Mobil";
     }//GEN-LAST:event_mobilCheckActionPerformed
 
@@ -633,9 +634,11 @@ public class KendaraanView extends javax.swing.JFrame {
         // TODO add your handling code here:
         mobilCheck.setEnabled(false);
         mobilCheck.setSelected(false);
+       
         motorCheck.setEnabled(false);
         jmlInput.setEnabled(false);
         jmlInput.setText("");
+        idInput.setText(kendaraanControl.generateIDMotor());
         act  = "Check Motor";
     }//GEN-LAST:event_motorCheckActionPerformed
 
@@ -648,22 +651,28 @@ public class KendaraanView extends javax.swing.JFrame {
             
             String temp = null;
             int temp2 = 0;
+            String id = null;
             
             if(act.equalsIgnoreCase("Check Mobil")){
                 temp = "Mobil";
                 temp2 = Integer.parseInt(jmlInput.getText());
-               
+                id = kendaraanControl.generateIDMobil();
+                
+               // CHECK
             } else if(act.equalsIgnoreCase("Check Motor")){
                 temp = "Motor";
                 
+                id = kendaraanControl.generateIDMotor();
             }
-            Kendaraan k = new Kendaraan(idInput.getText(), merkInput.getText(), temp, Integer.parseInt(tahunInput.getText()), 
+            Kendaraan k = new Kendaraan(id, merkInput.getText(), temp, Integer.parseInt(tahunInput.getText()), 
             platInput.getText(), temp2, takInput.getText());
             
             if(action.equals("Tambah")){
                 kendaraanControl.insertDataKendaraan(k);
+                JOptionPane.showMessageDialog(null, "Berhasil menambah kendaraan !");
             } else{
                 kendaraanControl.updateDataKendaraan(k, idInput.getText());
+                JOptionPane.showMessageDialog(null, "Berhasil edit kendaraan !");
             }
             mobilCheck.setEnabled(false);
             mobilCheck.setSelected(false);
@@ -676,12 +685,12 @@ public class KendaraanView extends javax.swing.JFrame {
             setEditDeleteBtn(false);
             act = "";
             
-        }catch(IdException e){
+        } catch(IdException e){
             JOptionPane.showMessageDialog(this, e.message());
         } catch(JenisException e1){
             JOptionPane.showMessageDialog(this, e1.message());
         }catch(NumberFormatException e2){
-            JOptionPane.showMessageDialog(this, "Tahun Pembuatan / Jumlah Penumpang hanya boleh berupa angka !");
+            JOptionPane.showMessageDialog(this, "Tahun Pembuatan / Jumlah Penumpang hanya boleh berupa angka bro!");
         }catch(KosongException e3){
             JOptionPane.showMessageDialog(this, e3.message());
         }
@@ -699,6 +708,7 @@ public class KendaraanView extends javax.swing.JFrame {
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
         setComponent(true);
+        idInput.setEnabled(false);
         clearText();
         searchInput.setText("");
         action = "Tambah";

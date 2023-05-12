@@ -158,4 +158,79 @@ public class KendaraanDAO {
        }
        dbCon.closeConnection();
    }
+   
+   public String generateIDMotor(){
+       con = dbCon.makeConnection();
+       
+       String sql = "SELECT id FROM kendaraan WHERE jenis = 'Motor' ORDER BY id DESC LIMIT 1";
+       System.out.println("Mencari kendaraan ...");
+       int id = 0;
+       String temp,temp2=null;
+       
+       try{
+           Statement statement = con.createStatement();
+           ResultSet rs = statement.executeQuery(sql);
+           
+           if(rs.next()){
+                temp = rs.getString("id");
+                id = Integer.parseInt(temp.split("-")[1]);
+                id++;
+                temp2 = "MTR-"+ id;
+               
+           }else{
+               temp2 = "MTR-1";
+           }
+           
+           System.out.println("CEK " + temp2);
+           
+           rs.close();
+           statement.close();
+       } catch(Exception e){
+           System.out.println("Error membaca database ...");
+           System.out.println(e);
+       }
+       dbCon.closeConnection();
+       return temp2;
+   }
+   
+   public String generateIDMobil(){
+       con = dbCon.makeConnection();
+       
+       String sql = "SELECT * FROM kendaraan WHERE jenis = 'Mobil' ORDER BY id DESC LIMIT 1";
+       System.out.println("Mencari kendaraan ...");
+       int id = 0;
+       String temp,temp2=null;
+       
+       try{
+           Statement statement = con.createStatement();
+           ResultSet rs = statement.executeQuery(sql);
+           
+           if(rs.next()){
+                temp = rs.getString("id");
+                id = Integer.parseInt(temp.split("-")[1]);
+                id++;
+                temp2 = "MBL-" + id;
+           }else{
+               temp2 = "MBL-1";
+           }
+           
+           System.out.println("CEK " + temp2);
+           
+           
+           rs.close();
+           statement.close();
+       } catch(Exception e){
+           System.out.println("Error membaca database ...");
+           System.out.println(e);
+       }
+       dbCon.closeConnection();
+       return temp2;
+   }
+   
+   
+   
 }
+
+
+
+
