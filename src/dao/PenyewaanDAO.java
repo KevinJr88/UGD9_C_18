@@ -43,10 +43,10 @@ public class PenyewaanDAO {
         dbCon.closeConnection();
     }
     
-    public List<Penyewaan> showPenyewaan(){
+    public List<Penyewaan> showPenyewaan(String query){
         con = dbCon.makeConnection();
         
-        String sql = "SELECT * FROM penyewaan";
+        String sql = "SELECT * FROM penyewaan"; // KEMUNGKINAN SALAH
         System.out.println("Mengambil data penyewaan...");
         
         List<Penyewaan> list = new ArrayList();
@@ -91,5 +91,42 @@ public class PenyewaanDAO {
     }
     dbCon.closeConnection();
     return list;
+    }
+    
+    public void updatePenyewaan(Penyewaan p){
+        con = dbCon.makeConnection();
+        
+        String sql = "";// BELUM DIISI
+                
+        System.out.println("Editing Penyewaan ...");
+        
+        try{
+            Statement statement = con.createStatement();
+            int result = statement.executeUpdate(sql);
+            System.out.println("Editing " + result + " Mata Kuliah " + p.getId());
+            statement.close();
+        } catch(Exception e){
+            System.out.println("Error editing penyewaan ...");
+            System.out.println(e);
+        }
+        dbCon.closeConnection();
+    }
+    
+    public void deletePenyewaan(int id){
+        con = dbCon.makeConnection();
+        
+        String sql = "DELETE FROM penyewaan WHERE id = " + id + "";
+        System.out.println("Deleting penyewaan ...");
+        
+        try{
+            Statement statement = con.createStatement();
+            int result = statement.executeUpdate(sql);
+            System.out.println("Delete " + result + " Mata Kuliah " + id);
+            statement.close();
+        } catch(Exception e){
+            System.out.println("Error deleting penyewaan ...");
+            System.out.println(e);
+        }
+        dbCon.closeConnection();
     }
 }
