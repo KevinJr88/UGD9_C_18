@@ -8,6 +8,13 @@ package control;
 Kevin Julian Rahadinata - 210711024
 Michael Kevin Kimyuwono - 210711056
 */
+
+import dao.CustomerDAO;
+import java.util.List;
+import model.Customer;
+
 public class CustomerControl {
+    private CustomerDAO cDao = new CustomerDAO();
     
+  
 }
