@@ -29,13 +29,11 @@ public class PenyewaanView extends javax.swing.JFrame {
         setComponent(false);
         kendaraanControl = new KendaraanControl();
         penyewaanControl = new PenyewaanControl();
-        showMataKuliah();
-        setActionCommandRadio();
-        setKendaraanToDropdown();   
+        showPenyewaan();
+        //setKendaraanToDropdown();   
     }
     
-    
-    
+   
     public void setComponent(boolean value){
         inputLamaSewa.setEnabled(value);
         inputTotalHarga.setEnabled(value);
@@ -50,17 +48,28 @@ public class PenyewaanView extends javax.swing.JFrame {
         cancelBtn.setEnabled(value);
     }
 
-     public void showMataKuliah(){
+     public void showPenyewaan(){
         tablePenyewaan.setModel(penyewaanControl.showPenyewaan(""));
     }
      
-    public void setKendaraanToDropdown(){
-        listKendaraan = kendaraanControl.showListKendaraan();
-        for(int i=0; i<listKendaraan.size(); i++){
-            selectMerkKendaraan.addItem(listKendaraan.get(i));
-  
-        }
+     public void clearText(){
+        inputLamaSewa.setText("");
+        inputTotalHarga.setText("");
+        searchInput.setText("");
+        selectMerkKendaraan.setSelectedItem(ABORT);
+        selectNamaCustomer.setSelectedItem(ABORT);
+        maskerCB.setSelected(false);
+        tissueCB.setSelected(false);
+        snackCB.setSelected(false);
+   
     }
+     
+//    public void setKendaraanToDropdown(){
+//        listKendaraan = kendaraanControl.showListKendaraan();
+//        for(int i=0; i<listKendaraan.size(); i++){
+//            selectMerkKendaraan.addItem(listKendaraan.get(i));
+//        }
+//    }
      
  
     @SuppressWarnings("unchecked")
@@ -128,6 +137,11 @@ public class PenyewaanView extends javax.swing.JFrame {
         jLabel10.setText("210711056");
 
         kendaraanIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/kendaraanIcon.png"))); // NOI18N
+        kendaraanIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                kendaraanIconMouseClicked(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -264,6 +278,11 @@ public class PenyewaanView extends javax.swing.JFrame {
         searchPanel.setBackground(new java.awt.Color(255, 204, 0));
 
         searchInput.setBackground(new java.awt.Color(255, 255, 255));
+        searchInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchInputActionPerformed(evt);
+            }
+        });
 
         searchBtn.setBackground(new java.awt.Color(51, 51, 255));
         searchBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -555,11 +574,28 @@ public class PenyewaanView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        // TODO add your handling code here:
+        setComponent(true);
+        action = "Ubah";
+  
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        // TODO add your handling code here:
+        int getAnswer = JOptionPane.showConfirmDialog(rootPane,"Apakah yaking ingin menghapus data ? ", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        
+        switch(getAnswer){
+            case 0:
+                try{
+                    penyewaanControl.deleteDataPenyewaan(Integer.parseInt(searchInput.getText()));
+                    clearText();
+                    showPenyewaan();
+                    setComponent(false);
+                }catch(Exception e){
+                    System.out.println("Error : "+e.getMessage());
+                }
+                break;
+            case 1:
+                break;
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void snackCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snackCBActionPerformed
@@ -579,11 +615,19 @@ public class PenyewaanView extends javax.swing.JFrame {
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        // TODO add your handling code here:
+        setComponent(false);
+        clearText();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        // TODO add your handling code here:
+        setComponent(true);
+        editBtn.setEnabled(false);
+        deleteBtn.setEnabled(false);
+        clearText();
+        searchInput.setText("");
+        action = "Tambah";
+        selectMerkKendaraan.setSelectedIndex(0);
+        selectNamaCustomer.setSelectedIndex(0);
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void inputLamaSewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputLamaSewaActionPerformed
@@ -594,9 +638,33 @@ public class PenyewaanView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_selectMerkKendaraanActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void searchInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInputActionPerformed
+     
+        setComponent(false);
+        
+        try{
+            TablePenyewaan penyewaan = penyewaanControl.showPenyewaan(searchInput.getText());
+            if(penyewaan.getRowCount() == 0){
+                clearText();
+                
+                JOptionPane.showConfirmDialog(rootPane, "Data tidak ditemukan", "Konfirmasi", JOptionPane.DEFAULT_OPTION);
+            }else{
+                editBtn.setEnabled(true);
+                deleteBtn.setEnabled(true);
+                tablePenyewaan.setModel(penyewaan);
+            }
+        }catch(Exception e){
+            System.out.println("Error : "+e.getMessage());
+        }
+    }//GEN-LAST:event_searchInputActionPerformed
+
+    private void kendaraanIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kendaraanIconMouseClicked
+        KendaraanView dv = new KendaraanView();
+        this.dispose();
+        dv.setVisible(true);
+    }//GEN-LAST:event_kendaraanIconMouseClicked
+
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

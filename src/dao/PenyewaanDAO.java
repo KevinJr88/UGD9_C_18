@@ -48,7 +48,7 @@ public class PenyewaanDAO {
         
         String sql = "SELECT p.*, k.*, c.* FROM penyewaan as p JOIN kendaraan as k ON p.id_kendaraan = k.id "
                 + "JOIN customer as c ON p.id_customer = c.id "
-                + "WHERE (k.model LIKE "
+                + "WHERE (k.merk LIKE "
                 +"'%" + query + "%'"
                 + "OR k.jenis LIKE '%" + query + "%'"
                 + "OR c.nama LIKE '%" + query + "%'"
@@ -69,26 +69,26 @@ public class PenyewaanDAO {
             if(rs!=null){
                 while(rs.next()){
                     Kendaraan k = new Kendaraan(
-                            rs.getString("id"),
-                            rs.getString("model"),
-                            rs.getString("jenis"),
-                            rs.getInt("tahunPembuatan"),
-                            rs.getString("noPlat"),
-                            rs.getInt("jumlah_penumpang"),
-                            rs.getString("jenis_tak")
+                            rs.getString("k.id"),
+                            rs.getString("k.model"),
+                            rs.getString("k.jenis"),
+                            rs.getInt("k.tahunPembuatan"),
+                            rs.getString("k.noPlat"),
+                            rs.getInt("k.jumlah_penumpang"),
+                            rs.getString("k.jenis_tak")
                     );
                     
                     Customer c = new Customer(
-                            rs.getInt("id"),
-                            rs.getString("nama"),
-                            rs.getString("ktp"),
-                            rs.getString("no_telepon")
+                            rs.getInt("c.id"),
+                            rs.getString("c.nama"),
+                            rs.getString("c.ktp"),
+                            rs.getString("c.no_telepon")
                     );
                     Penyewaan p = new Penyewaan(
-                            rs.getInt("id"),
-                            rs.getString("lama_sewa"),
-                            rs.getFloat("total_harga"),
-                            rs.getString("fasilitas"),
+                            rs.getInt("p.id"),
+                            rs.getString("p.lama_sewa"),
+                            rs.getFloat("p.total_harga"),
+                            rs.getString("p.fasilitas"),
                             k,c
                     );
                     list.add(p);
