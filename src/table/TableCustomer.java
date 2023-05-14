@@ -43,4 +43,20 @@ public class TableCustomer extends AbstractTableModel{
         }
     }
     
+    public String getColumnName(int column){
+        switch(column){
+            case 0:
+                return "ID";
+            case 1:
+                return "Nama";
+            case 2:
+                return "No. KTP";
+            case 3:
+                return "No. Telepon";
+            default:
+                return null;
+                   
+        }
+    }
+    
 }
