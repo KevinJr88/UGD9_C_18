@@ -62,5 +62,10 @@ public class KendaraanControl {
         return temp;
     }
     
+    public List<Kendaraan> showListKendaraan(){
+        List<Kendaraan> kendaraan = kDao.showKendaraan();
+        return kendaraan;
+    }
+    
     
 }
