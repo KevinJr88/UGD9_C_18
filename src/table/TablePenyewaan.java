@@ -25,7 +25,7 @@ public class TablePenyewaan extends AbstractTableModel{
     }
     
     public int getColumnCount(){
-        return 5;
+        return 8;
     }
     
     public Object getValueAt(int rowIndex, int columnIndex){

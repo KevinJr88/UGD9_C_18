@@ -16,5 +16,5 @@ import model.Customer;
 public class CustomerControl {
     private CustomerDAO cDao = new CustomerDAO();
     
-  
+    
 }

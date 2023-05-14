@@ -26,9 +26,9 @@ public class PenyewaanDAO {
     public void insertPenyewaan(Penyewaan p){
         con = dbCon.makeConnection();
         
-        String sql = "INSERT INTO penyewaan(id, lama_sewa, total_harga, fasilitas, kendaraan, customer)"
+        String sql = "INSERT INTO penyewaan(id, lama_sewa, total_harga, fasilitas, id_kendaraan, id_customer)"
                 + "VALUE ('" + p.getId() + "','" + p.getLama_sewa() + "','" + p.getTotal_harga() + "','"
-                + p.getFasilitas() + "','" + p.getKendaraan() + "','" + p.getCustomer() + "')";
+                + p.getFasilitas() + "','" + p.getKendaraan().getId()+ "','" + p.getCustomer().getId()+ "')";
         System.out.println("Menambahkan Penyewaan ...");
     
         try{
@@ -46,7 +46,12 @@ public class PenyewaanDAO {
     public List<Penyewaan> showPenyewaan(String query){
         con = dbCon.makeConnection();
         
-        String sql = "SELECT * FROM penyewaan"; // KEMUNGKINAN SALAH
+        String sql = "SELECT p.*, k.* FROM penyewaan as p JOIN kendaraan as k ON p.id_kendaraan = k.id WHERE (p.lama_sewa LIKE "
+                +"'%" + query + "%'"
+                + "OR p.total_harga LIKE '%" + query + "%'"
+                + "OR p.fasilitas LIKE '%" + query + "%'"
+                + "OR k.model LIKE '%" + query + "%')" ;
+        
         System.out.println("Mengambil data penyewaan...");
         
         List<Penyewaan> list = new ArrayList();
@@ -96,7 +101,12 @@ public class PenyewaanDAO {
     public void updatePenyewaan(Penyewaan p){
         con = dbCon.makeConnection();
         
-        String sql = "";// BELUM DIISI
+        String sql = "UPDATE penyewaan SET id_kendaraan = '" + p.getKendaraan().getId()// ._.'
+                + "', id_customer = '" + p.getCustomer().getId()
+                + "', lama_sewa = '" + p.getLama_sewa()
+                + "', total_harga = '" + p.getTotal_harga()
+                + "', fasilitas = '" + p.getFasilitas()
+                + "' WHERE id = '" + p.getId() + "'";
                 
         System.out.println("Editing Penyewaan ...");
         
