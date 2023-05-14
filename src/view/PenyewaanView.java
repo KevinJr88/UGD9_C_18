@@ -20,9 +20,12 @@ import table.TablePenyewaan;
 public class PenyewaanView extends javax.swing.JFrame {
     private KendaraanControl kendaraanControl;
     private PenyewaanControl penyewaanControl;
+    private CustomerControl customerControl;
     String action = null;
     List<Kendaraan> listKendaraan;
+    List<Customer> listCustomer;
     int selectedId=0;
+    String snack = "-", tissue = "-", masker="-";
     
     public PenyewaanView() {
         initComponents();
@@ -30,7 +33,8 @@ public class PenyewaanView extends javax.swing.JFrame {
         kendaraanControl = new KendaraanControl();
         penyewaanControl = new PenyewaanControl();
         showPenyewaan();
-        //setKendaraanToDropdown();   
+        setKendaraanToDropdown();   
+        //setCustomerToDropdown();
     }
     
    
@@ -61,15 +65,25 @@ public class PenyewaanView extends javax.swing.JFrame {
         maskerCB.setSelected(false);
         tissueCB.setSelected(false);
         snackCB.setSelected(false);
+        masker = "-";
+        tissue = "-";
+        snack = "-";
    
     }
      
-//    public void setKendaraanToDropdown(){
-//        listKendaraan = kendaraanControl.showListKendaraan();
-//        for(int i=0; i<listKendaraan.size(); i++){
-//            selectMerkKendaraan.addItem(listKendaraan.get(i));
-//        }
-//    }
+    public void setKendaraanToDropdown(){
+        listKendaraan = kendaraanControl.showListKendaraan();
+        for(int i=0; i<listKendaraan.size(); i++){
+            selectMerkKendaraan.addItem(String.valueOf(listKendaraan.get(i)));
+        }
+    }
+    
+   /* public void setCustomerToDropdown(){
+        listCustomer = customerControl.showListCustomer();
+        for(int i=0; i<listCustomer.size(); i++){
+            selectNamaCustomer.addItem(String.valueOf(listCustomer.get(i)));
+        }
+    }*/
      
  
     @SuppressWarnings("unchecked")
@@ -288,6 +302,11 @@ public class PenyewaanView extends javax.swing.JFrame {
         searchBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         searchBtn.setForeground(new java.awt.Color(255, 255, 255));
         searchBtn.setText("Cari");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -339,6 +358,11 @@ public class PenyewaanView extends javax.swing.JFrame {
 
         selectNamaCustomer.setBackground(new java.awt.Color(255, 255, 255));
         selectNamaCustomer.setForeground(new java.awt.Color(255, 255, 255));
+        selectNamaCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectNamaCustomerActionPerformed(evt);
+            }
+        });
 
         inputTotalHarga.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -508,6 +532,11 @@ public class PenyewaanView extends javax.swing.JFrame {
             }
         });
         tablePenyewaan.setGridColor(new java.awt.Color(204, 204, 255));
+        tablePenyewaan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePenyewaanMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablePenyewaan);
 
         javax.swing.GroupLayout showPanelLayout = new javax.swing.GroupLayout(showPanel);
@@ -585,7 +614,7 @@ public class PenyewaanView extends javax.swing.JFrame {
         switch(getAnswer){
             case 0:
                 try{
-                    penyewaanControl.deleteDataPenyewaan(Integer.parseInt(searchInput.getText()));
+                    penyewaanControl.deleteDataPenyewaan((searchInput.getText()));
                     clearText();
                     showPenyewaan();
                     setComponent(false);
@@ -599,19 +628,51 @@ public class PenyewaanView extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void snackCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snackCBActionPerformed
-        // TODO add your handling code here:
+        if(snack.equalsIgnoreCase("-")){
+            snack = "Snack";
+        } else{
+            snack = "-";
+        }
     }//GEN-LAST:event_snackCBActionPerformed
 
     private void maskerCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maskerCBActionPerformed
-        // TODO add your handling code here:
+        if(masker.equals("-")){
+            masker = "Masker";
+        }else{
+            masker = "-";
+        }
+        
+        
     }//GEN-LAST:event_maskerCBActionPerformed
 
     private void tissueCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tissueCBActionPerformed
-        // TODO add your handling code here:
+       if(tissue.equals("-")){
+            tissue = "Tissue";
+        }else{
+            tissue = "-";
+        }
     }//GEN-LAST:event_tissueCBActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
+        //try{
+            String fasilitas = "";
+            int selectedIndex = selectMerkKendaraan.getSelectedIndex();
+            Kendaraan selectedKendaraan = listKendaraan.get(selectedIndex);
+            int selectedIndex2 = selectNamaCustomer.getSelectedIndex();
+            Customer selectedCustomer = listCustomer.get(selectedIndex2);
+          
+            Penyewaan py = new Penyewaan(inputLamaSewa.getText(), Float.parseFloat(inputTotalHarga.getText()) , snack+", "+masker+ ", "+tissue, selectedKendaraan, selectedCustomer );
+            clearText();
+            showPenyewaan();
+            setComponent(false);
+         
+            
+             
+        //}catch ({
+            
+        //}
+        
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
@@ -663,6 +724,84 @@ public class PenyewaanView extends javax.swing.JFrame {
         this.dispose();
         dv.setVisible(true);
     }//GEN-LAST:event_kendaraanIconMouseClicked
+
+    private void selectNamaCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectNamaCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selectNamaCustomerActionPerformed
+
+    private void tablePenyewaanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePenyewaanMouseClicked
+     int indexKendaraan = -1;
+     setComponent(false);
+     editBtn.setEnabled(true);
+     deleteBtn.setEnabled(true);
+     
+     int clickedRow = tablePenyewaan.getSelectedRow();
+     TableModel table = tablePenyewaan.getModel();
+     
+     selectedId = Integer.parseInt(table.getValueAt(clickedRow, 8).toString());
+
+     inputLamaSewa.setText(table.getValueAt(clickedRow, 3).toString());
+     inputTotalHarga.setText(table.getValueAt(clickedRow, 4).toString());
+     selectMerkKendaraan.setEnabled(false);
+     selectNamaCustomer.setEnabled(false);
+     String fasilitas = table.getValueAt(clickedRow, 5).toString(); 
+     switch(fasilitas){
+         case "Snack, Masker, Tissue":
+             snackCB.setSelected(true);
+             maskerCB.setSelected(true);
+             tissueCB.setSelected(true);
+         case "-, Masker, Tissue":
+             snackCB.setSelected(false);
+             maskerCB.setSelected(true);
+             tissueCB.setSelected(true);
+         case "-, -, Tissue":
+             snackCB.setSelected(false);
+             maskerCB.setSelected(false);
+             tissueCB.setSelected(true);
+         case "-, -, -":
+             snackCB.setSelected(false);
+             maskerCB.setSelected(false);
+             tissueCB.setSelected(false);
+         case "Snack, -, -":
+             snackCB.setSelected(true);
+             maskerCB.setSelected(false);
+             tissueCB.setSelected(false);
+         case "-, Masker, -":
+             snackCB.setSelected(false);
+             maskerCB.setSelected(true);
+             tissueCB.setSelected(false);
+         case "Snack, -, Tissue":
+             snackCB.setSelected(true);
+             maskerCB.setSelected(false);
+             tissueCB.setSelected(true);
+         case "Snack, Masker, -":
+             snackCB.setSelected(true);
+             maskerCB.setSelected(true);
+             tissueCB.setSelected(false);
+     }
+     
+        
+        
+    }//GEN-LAST:event_tablePenyewaanMouseClicked
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        // TODO add your handling code here:
+        setComponent(false);
+        
+        try{
+            TablePenyewaan penyewaan = penyewaanControl.showPenyewaan(searchInput.getText());
+            if(penyewaan.getRowCount() == 0){
+                clearText();
+                editBtn.setEnabled(false);
+                deleteBtn.setEnabled(false);
+                JOptionPane.showConfirmDialog(rootPane, "Data tidak ditemukan", "Konfirmasi", JOptionPane.DEFAULT_OPTION);
+            }else{
+                tablePenyewaan.setModel(penyewaan);
+            }
+        }catch(Exception e){
+            System.out.println("Error : "+e.getMessage());
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
 
    
     public static void main(String args[]) {

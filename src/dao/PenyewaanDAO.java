@@ -70,7 +70,7 @@ public class PenyewaanDAO {
                 while(rs.next()){
                     Kendaraan k = new Kendaraan(
                             rs.getString("k.id"),
-                            rs.getString("k.model"),
+                            rs.getString("k.merk"),
                             rs.getString("k.jenis"),
                             rs.getInt("k.tahunPembuatan"),
                             rs.getString("k.noPlat"),
@@ -128,16 +128,27 @@ public class PenyewaanDAO {
         dbCon.closeConnection();
     }
     
-    public void deletePenyewaan(int id){
+    public void deletePenyewaan(String query){
         con = dbCon.makeConnection();
         
-        String sql = "DELETE FROM penyewaan WHERE id = " + id + "";
+   
+        String sql = "DELETE p.* FROM penyewaan as p JOIN kendaraan as k ON p.id_kendaraan = k.id "
+                + "JOIN customer as c ON p.id_customer = c.id "
+                + "WHERE (k.merk LIKE "
+                +"'%" + query + "%'"
+                + "OR k.jenis LIKE '%" + query + "%'"
+                + "OR c.nama LIKE '%" + query + "%'"
+                + "OR p.lama_sewa LIKE '%" + query + "%'"
+                + "OR p.total_harga LIKE '%" + query + "%'"
+                + "OR p.fasilitas LIKE '%" + query + "%'"
+                + "OR k.jumlah_penumpang LIKE '%" + query + "%'"
+                + "OR k.jenis_tak LIKE '%" + query + "%')" ;
         System.out.println("Deleting penyewaan ...");
         
         try{
             Statement statement = con.createStatement();
             int result = statement.executeUpdate(sql);
-            System.out.println("Delete " + result + " Mata Kuliah " + id);
+            System.out.println("Delete " + result + " Mata Kuliah " + query);
             statement.close();
         } catch(Exception e){
             System.out.println("Error deleting penyewaan ...");

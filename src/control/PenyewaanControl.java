@@ -31,7 +31,7 @@ public class PenyewaanControl {
         pDao.updatePenyewaan(p);
     }
     
-    public void deleteDataPenyewaan(int id){
+    public void deleteDataPenyewaan(String id){
         pDao.deletePenyewaan(id);
     }
 }
