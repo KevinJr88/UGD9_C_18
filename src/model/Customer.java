@@ -52,4 +52,9 @@ public class Customer {
     public void setNo_telepon(String no_telepon) {
         this.no_telepon = no_telepon;
     }
+    
+    @Override
+    public String toString(){
+        return nama;
+    }
 }
