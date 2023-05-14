@@ -17,6 +17,7 @@ import table.TableCustomer;
 public class CustomerControl {
     private CustomerDAO cDao = new CustomerDAO();
     
+    
     public TableCustomer showCustomer(String query){
         List<Customer> dataCustomer = cDao.showCustomer();
         TableCustomer tableCustomer = new TableCustomer(dataCustomer);

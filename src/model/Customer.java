@@ -4,10 +4,10 @@
  */
 package model;
 
-/**
- *
- * @author kevin
- */
+/*
+Kevin Julian Rahadinata - 210711024
+Michael Kevin Kimyuwono - 210711056
+*/
 public class Customer {
     private int id;
     private String nama;
