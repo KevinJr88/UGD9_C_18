@@ -120,10 +120,8 @@
                           <EmptySpace min="33" pref="33" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="editBtn" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="deleteBtn" max="32767" attributes="0"/>
-                                  <Component id="addBtn" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="deleteBtn" max="32767" attributes="0"/>
+                              <Component id="addBtn" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="34" max="32767" attributes="0"/>
                       </Group>
@@ -157,6 +155,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Tambah"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addBtnActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="editBtn">
                   <Properties>

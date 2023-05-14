@@ -46,11 +46,17 @@ public class PenyewaanDAO {
     public List<Penyewaan> showPenyewaan(String query){
         con = dbCon.makeConnection();
         
-        String sql = "SELECT p.*, k.* FROM penyewaan as p JOIN kendaraan as k ON p.id_kendaraan = k.id WHERE (p.lama_sewa LIKE "
+        String sql = "SELECT p.*, k.*, c.* FROM penyewaan as p JOIN kendaraan as k ON p.id_kendaraan = k.id "
+                + "JOIN customer as c ON p.id_customer = c.id "
+                + "WHERE (k.model LIKE "
                 +"'%" + query + "%'"
+                + "OR k.jenis LIKE '%" + query + "%'"
+                + "OR c.nama LIKE '%" + query + "%'"
+                + "OR p.lama_sewa LIKE '%" + query + "%'"
                 + "OR p.total_harga LIKE '%" + query + "%'"
                 + "OR p.fasilitas LIKE '%" + query + "%'"
-                + "OR k.model LIKE '%" + query + "%')" ;
+                + "OR k.jumlah_penumpang LIKE '%" + query + "%'"
+                + "OR k.jenis_tak LIKE '%" + query + "%')" ;
         
         System.out.println("Mengambil data penyewaan...");
         
