@@ -110,10 +110,13 @@ public class Kendaraan {
                     "\nJenis Motor : " + this.jenis_tak + "\n";   
             } else{
                 return "";
-            }
-                 
-        }
-        
+            }        
+        } 
+    }
+    
+    @Override
+    public String toString(){
+        return merk;
     }
 
 }

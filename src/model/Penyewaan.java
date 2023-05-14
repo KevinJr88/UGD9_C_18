@@ -25,6 +25,14 @@ public class Penyewaan {
         this.customer = customer;
     }
 
+    public Penyewaan(String lama_sewa, float total_harga, String fasilitas, Kendaraan kendaraan, Customer customer) {
+        this.lama_sewa = lama_sewa;
+        this.total_harga = total_harga;
+        this.fasilitas = fasilitas;
+        this.kendaraan = kendaraan;
+        this.customer = customer;
+    }
+
     public int getId() {
         return id;
     }
