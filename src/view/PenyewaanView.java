@@ -667,8 +667,15 @@ public class PenyewaanView extends javax.swing.JFrame {
             Kendaraan selectedKendaraan = listKendaraan.get(selectedIndex);
             int selectedIndex2 = selectNamaCustomer.getSelectedIndex();
             Customer selectedCustomer = listCustomer.get(selectedIndex2);
-          
-            Penyewaan py = new Penyewaan(inputLamaSewa.getText(), Float.parseFloat(inputTotalHarga.getText()) , snack+", "+masker+ ", "+tissue, selectedKendaraan, selectedCustomer );
+            
+            if(action.equalsIgnoreCase("Tambah")){
+                Penyewaan py = new Penyewaan(inputLamaSewa.getText(), Float.parseFloat(inputTotalHarga.getText()) , snack+", "+masker+ ", "+tissue, selectedKendaraan, selectedCustomer );
+                penyewaanControl.insertPenyewaan(py);
+            } else if(action.equalsIgnoreCase("Ubah")){
+                Penyewaan py = new Penyewaan(selectedId, inputLamaSewa.getText(), Float.parseFloat(inputTotalHarga.getText()) , snack+", "+masker+ ", "+tissue, selectedKendaraan, selectedCustomer );
+                penyewaanControl.updateDataPenyewaan(py);
+            }
+           
             clearText();
             showPenyewaan();
             setComponent(false);
