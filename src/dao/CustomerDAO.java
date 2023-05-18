@@ -76,20 +76,20 @@ public class CustomerDAO {
         dbCon.closeConnection();
     }
     
-    public void updateCustomer(Customer c, int idCustomer){
+    public void updateCustomer(Customer c){
         con = dbCon.makeConnection();
         
         String sql = "UPDATE customer SET nama = '" + c.getNama() + "', "
                 + "ktp = '" + c.getKtp() + "' "
-                + "no_telepon = '" + c.getNo_telepon() + "' "
-                + "WHERE id = '" + idCustomer + "'";
+                + ", no_telepon = '" + c.getNo_telepon() + "' "
+                + "WHERE id = '" + c.getId() + "'";
         
         System.out.println("Editing Customer ...");
         
         try{
             Statement statement = con.createStatement();
             int result = statement.executeUpdate(sql);
-            System.out.println("Edited " + result + " Customer " + idCustomer);
+            System.out.println("Edited " + result + " Customer " + c.getId());
             statement.close();
         } catch(Exception e){
             System.out.println("Error editing customer");

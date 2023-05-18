@@ -29,8 +29,8 @@ public class CustomerControl {
         return tableCustomer;
     }
     
-    public void updateDataCustomer(Customer c, int idCustomer){
-        cDao.updateCustomer(c, idCustomer);
+    public void updateDataCustomer(Customer c){
+        cDao.updateCustomer(c);
     }
     
     public TableCustomer showCustomerBySearch(String query){

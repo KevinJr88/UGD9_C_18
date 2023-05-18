@@ -535,11 +535,13 @@ public class CustomerView extends javax.swing.JFrame {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         try{
            
-            Customer c = new Customer(inputNama.getText(), inputKTP.getText(), inputNoTelp.getText());
+            
             if(action.equals("Tambah")){
+                Customer c = new Customer(inputNama.getText(), inputKTP.getText(), inputNoTelp.getText());
                 customerControl.insertDataCustomer(c);
             }else{
-                customerControl.updateDataCustomer(c, selectedId);
+                Customer c = new Customer(selectedId, inputNama.getText(), inputKTP.getText(), inputNoTelp.getText());
+                customerControl.updateDataCustomer(c);
             }
             clearText();
             showCustomer();
@@ -562,7 +564,18 @@ public class CustomerView extends javax.swing.JFrame {
     }//GEN-LAST:event_penyewaanIconMouseClicked
 
     private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseClicked
+        setComponent(false);
+        editBtn.setEnabled(true);
+        deleteBtn.setEnabled(true);
         
+        int clickedRow = tableCustomer.getSelectedRow();
+        TableModel table = tableCustomer.getModel();
+        
+        selectedId = Integer.parseInt(table.getValueAt(clickedRow, 0).toString());
+        
+        inputNama.setText(table.getValueAt(clickedRow, 1).toString());
+        inputKTP.setText(table.getValueAt(clickedRow, 2).toString());
+        inputNoTelp.setText(table.getValueAt(clickedRow, 3).toString());
     }//GEN-LAST:event_tableCustomerMouseClicked
 
     /**
