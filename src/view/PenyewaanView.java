@@ -744,6 +744,7 @@ public class PenyewaanView extends javax.swing.JFrame {
 
     private void tablePenyewaanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePenyewaanMouseClicked
      int indexKendaraan = -1;
+     int indexCustomer = -1;
      setComponent(false);
      editBtn.setEnabled(true);
      deleteBtn.setEnabled(true);
@@ -755,46 +756,79 @@ public class PenyewaanView extends javax.swing.JFrame {
 
      inputLamaSewa.setText(table.getValueAt(clickedRow, 3).toString());
      inputTotalHarga.setText(table.getValueAt(clickedRow, 4).toString());
-     selectMerkKendaraan.setEnabled(false);
-     selectNamaCustomer.setEnabled(false);
+    
+     String id = table.getValueAt(clickedRow, 9).toString();
+     for(Kendaraan kendaraan : listKendaraan){
+            if(kendaraan.getId().equals(id)){
+                indexKendaraan = listKendaraan.indexOf(kendaraan);
+            }
+        }
+        selectMerkKendaraan.setSelectedIndex(indexKendaraan);
+        
+     String id2 = table.getValueAt(clickedRow, 10).toString();
+     for(Customer customer : listCustomer){
+            if(String.valueOf(customer.getId()).equals(id2)){
+                indexCustomer = listCustomer.indexOf(customer);
+            }
+        }
+        selectNamaCustomer.setSelectedIndex(indexCustomer);    
+     
      String fasilitas = table.getValueAt(clickedRow, 5).toString(); 
      switch(fasilitas){
          case "Snack, Masker, Tissue":
              snackCB.setSelected(true);
+             snack = "Snack";
              maskerCB.setSelected(true);
+             masker = "Masker";
              tissueCB.setSelected(true);
+             tissue = "Tissue";
+             break;
          case "-, Masker, Tissue":
              snackCB.setSelected(false);
              maskerCB.setSelected(true);
+             masker = "Masker";
              tissueCB.setSelected(true);
+             tissue = "Tissue";
+             break;
          case "-, -, Tissue":
              snackCB.setSelected(false);
              maskerCB.setSelected(false);
              tissueCB.setSelected(true);
+             tissue = "Tissue";
+             break;
          case "-, -, -":
              snackCB.setSelected(false);
              maskerCB.setSelected(false);
              tissueCB.setSelected(false);
+             break;
          case "Snack, -, -":
              snackCB.setSelected(true);
+             snack = "Snack";
              maskerCB.setSelected(false);
              tissueCB.setSelected(false);
+             break;
          case "-, Masker, -":
              snackCB.setSelected(false);
              maskerCB.setSelected(true);
+             masker = "Masker";
              tissueCB.setSelected(false);
+             break;
          case "Snack, -, Tissue":
              snackCB.setSelected(true);
+             snack = "Snack";
              maskerCB.setSelected(false);
              tissueCB.setSelected(true);
+             tissue = "Tissue";
+             break;
+             
          case "Snack, Masker, -":
              snackCB.setSelected(true);
+             snack = "Snack";
              maskerCB.setSelected(true);
+             masker = "Masker";
              tissueCB.setSelected(false);
+             break;
      }
-     
-        
-        
     }//GEN-LAST:event_tablePenyewaanMouseClicked
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
