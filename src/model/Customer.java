@@ -20,7 +20,13 @@ public class Customer {
         this.ktp = ktp;
         this.no_telepon = no_telepon;
     }
-
+    
+    public Customer(String nama, String ktp, String no_telepon) {
+        this.nama = nama;
+        this.ktp = ktp;
+        this.no_telepon = no_telepon;
+    }
+    
     public int getId() {
         return id;
     }
