@@ -32,9 +32,10 @@ public class PenyewaanView extends javax.swing.JFrame {
         setComponent(false);
         kendaraanControl = new KendaraanControl();
         penyewaanControl = new PenyewaanControl();
+        customerControl = new CustomerControl();
         showPenyewaan();
         setKendaraanToDropdown();   
-        //setCustomerToDropdown();
+        setCustomerToDropdown();
     }
     
    
@@ -78,12 +79,12 @@ public class PenyewaanView extends javax.swing.JFrame {
         }
     }
     
-   /* public void setCustomerToDropdown(){
+   public void setCustomerToDropdown(){
         listCustomer = customerControl.showListCustomer();
         for(int i=0; i<listCustomer.size(); i++){
             selectNamaCustomer.addItem(String.valueOf(listCustomer.get(i)));
         }
-    }*/
+    }
      
  
     @SuppressWarnings("unchecked")
