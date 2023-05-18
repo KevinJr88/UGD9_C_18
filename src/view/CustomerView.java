@@ -4,18 +4,52 @@
  */
 package view;
 
-/**
- *
- * @author julia
- */
-public class CustomerView extends javax.swing.JFrame {
+import control.CustomerControl;
+import control.KendaraanControl;
+import control.PenyewaanControl;
 
-    /**
-     * Creates new form CustomerView
-     */
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+import model.Customer;
+import model.Kendaraan;
+import model.Penyewaan;
+import table.TableCustomer;
+import table.TablePenyewaan;
+
+public class CustomerView extends javax.swing.JFrame {
+    private CustomerControl customerControl;
+    private String action;
+    private int selectedId = 0;
+    
     public CustomerView() {
         initComponents();
+        setComponent(false);
+        customerControl = new CustomerControl();
+        showCustomer();
+        clearText();
     }
+    
+   public void setComponent(boolean value){
+       editBtn.setEnabled(value);
+       deleteBtn.setEnabled(value);
+       inputNama.setEnabled(value);
+       inputKTP.setEnabled(value);
+       inputNoTelp.setEnabled(value);
+       saveBtn.setEnabled(value);
+       cancelBtn.setEnabled(value);
+   }
+   
+   public void clearText(){
+        inputNama.setText("");
+        inputKTP.setText("");
+        inputNoTelp.setText(" ");
+        searchInput.setText("");
+    }
+   
+   public void showCustomer(){
+       tableCustomer.setModel(customerControl.showCustomer(""));
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,7 +89,7 @@ public class CustomerView extends javax.swing.JFrame {
         saveBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableCustomer = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +123,11 @@ public class CustomerView extends javax.swing.JFrame {
         jLabel12.setText("Penyewaan");
 
         penyewaanIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/iconPenyewaan.png"))); // NOI18N
+        penyewaanIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                penyewaanIconMouseClicked(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
@@ -321,7 +360,7 @@ public class CustomerView extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -332,7 +371,12 @@ public class CustomerView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tableCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableCustomerMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableCustomer);
 
         javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
         bodyPanel.setLayout(bodyPanelLayout);
@@ -422,25 +466,58 @@ public class CustomerView extends javax.swing.JFrame {
     }//GEN-LAST:event_kendaraanIconMouseClicked
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        
+        setComponent(true);
+        editBtn.setEnabled(false);
+        deleteBtn.setEnabled(false);
+        clearText();
+        searchInput.setText("");
+        action = "Tambah";
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-       
-
+       setComponent(true);
+        action = "Ubah";
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-       
+       int getAnswer = JOptionPane.showConfirmDialog(rootPane,"Apakah yaking ingin menghapus data ? ", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        
+        switch(getAnswer){
+            case 0:
+                try{
+                    customerControl.deleteCustomer(selectedId);
+                    clearText();
+                    showCustomer();
+                    setComponent(false);
+                }catch(Exception e){
+                    System.out.println("Error : "+e.getMessage());
+                }
+                break;
+            case 1:
+                break;
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void searchInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInputActionPerformed
 
-       
     }//GEN-LAST:event_searchInputActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        setComponent(false);
         
+        try{
+            TableCustomer customer = customerControl.showCustomer(searchInput.getText());
+            if(customer.getRowCount() == 0){
+                clearText();
+                editBtn.setEnabled(false);
+                deleteBtn.setEnabled(false);
+                JOptionPane.showConfirmDialog(rootPane, "Data tidak ditemukan", "Konfirmasi", JOptionPane.DEFAULT_OPTION);
+            }else{
+                tableCustomer.setModel(customer);
+            }
+        }catch(Exception e){
+            System.out.println("Error : "+e.getMessage());
+        }
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void inputKTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputKTPActionPerformed
@@ -456,13 +533,37 @@ public class CustomerView extends javax.swing.JFrame {
     }//GEN-LAST:event_inputNoTelpActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-       
+        try{
+           
+            Customer c = new Customer(inputNama.getText(), inputKTP.getText(), inputNoTelp.getText());
+            if(action.equals("Tambah")){
+                customerControl.insertDataCustomer(c);
+            }else{
+                customerControl.updateDataCustomer(c, selectedId);
+            }
+            clearText();
+            showCustomer();
+            setComponent(false);
+        }catch (Exception e){
+            System.out.println("Gagal menyimpan data");
+        }
 
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-     
+        setComponent(false);
+        clearText();
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void penyewaanIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_penyewaanIconMouseClicked
+        PenyewaanView dv = new PenyewaanView();
+        this.dispose();
+        dv.setVisible(true);
+    }//GEN-LAST:event_penyewaanIconMouseClicked
+
+    private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseClicked
+        
+    }//GEN-LAST:event_tableCustomerMouseClicked
 
     /**
      * @param args the command line arguments
@@ -522,13 +623,13 @@ public class CustomerView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel kendaraanIcon;
     private javax.swing.JLabel penyewaanIcon;
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton searchBtn;
     private javax.swing.JTextField searchInput;
     private javax.swing.JPanel searchPanel;
+    private javax.swing.JTable tableCustomer;
     private javax.swing.JPanel upbarPanel;
     // End of variables declaration//GEN-END:variables
 }

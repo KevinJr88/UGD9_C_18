@@ -174,6 +174,11 @@ public class PenyewaanView extends javax.swing.JFrame {
         jLabel13.setText("Kendaraan");
 
         customerIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/customerIcon.png"))); // NOI18N
+        customerIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customerIconMouseClicked(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -849,6 +854,12 @@ public class PenyewaanView extends javax.swing.JFrame {
             System.out.println("Error : "+e.getMessage());
         }
     }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void customerIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerIconMouseClicked
+        CustomerView dv = new CustomerView();
+        this.dispose();
+        dv.setVisible(true);
+    }//GEN-LAST:event_customerIconMouseClicked
 
    
     public static void main(String args[]) {
