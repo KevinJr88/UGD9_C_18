@@ -626,7 +626,7 @@ public class KendaraanView extends javax.swing.JFrame {
         motorCheck.setSelected(false);
         mobilCheck.setEnabled(false);
         takInput.setEnabled(false);
-        takInput.setText("");
+        takInput.setText("-");
         idInput.setText(kendaraanControl.generateIDMobil());
         act = "Check Mobil";
     }//GEN-LAST:event_mobilCheckActionPerformed
