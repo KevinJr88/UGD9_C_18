@@ -48,7 +48,7 @@ public class TablePenyewaan extends AbstractTableModel{
             case 7:
                 return list.get(rowIndex).getKendaraan().getJenis_tak();
             case 8:
-                return list.get(rowIndex).getKendaraan().getId();
+                return list.get(rowIndex).getId();
             default :
                 return null;
          }
