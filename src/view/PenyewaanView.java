@@ -8,6 +8,10 @@ import control.CustomerControl;
 import control.KendaraanControl;
 import control.PenyewaanControl;
 
+import dao.CustomerDAO;
+import dao.KendaraanDAO;
+import dao.PenyewaanDAO;
+
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
@@ -32,9 +36,10 @@ public class PenyewaanView extends javax.swing.JFrame {
         setComponent(false);
         kendaraanControl = new KendaraanControl();
         penyewaanControl = new PenyewaanControl();
+        customerControl = new CustomerControl();
         showPenyewaan();
         setKendaraanToDropdown();   
-        //setCustomerToDropdown();
+        setCustomerToDropdown();
     }
     
    
@@ -78,12 +83,12 @@ public class PenyewaanView extends javax.swing.JFrame {
         }
     }
     
-   /* public void setCustomerToDropdown(){
+    public void setCustomerToDropdown(){
         listCustomer = customerControl.showListCustomer();
         for(int i=0; i<listCustomer.size(); i++){
             selectNamaCustomer.addItem(String.valueOf(listCustomer.get(i)));
         }
-    }*/
+    }
      
  
     @SuppressWarnings("unchecked")
@@ -614,7 +619,7 @@ public class PenyewaanView extends javax.swing.JFrame {
         switch(getAnswer){
             case 0:
                 try{
-                    penyewaanControl.deleteDataPenyewaan((searchInput.getText()));
+                    penyewaanControl.deleteDataPenyewaan(selectedId);
                     clearText();
                     showPenyewaan();
                     setComponent(false);
@@ -655,7 +660,7 @@ public class PenyewaanView extends javax.swing.JFrame {
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
-        //try{
+        try{
             String fasilitas = "";
             int selectedIndex = selectMerkKendaraan.getSelectedIndex();
             Kendaraan selectedKendaraan = listKendaraan.get(selectedIndex);
@@ -669,9 +674,9 @@ public class PenyewaanView extends javax.swing.JFrame {
          
             
              
-        //}catch ({
-            
-        //}
+        }catch (Exception e){
+            System.out.println(e);
+        }
         
     }//GEN-LAST:event_saveBtnActionPerformed
 
@@ -687,8 +692,8 @@ public class PenyewaanView extends javax.swing.JFrame {
         clearText();
         searchInput.setText("");
         action = "Tambah";
-        selectMerkKendaraan.setSelectedIndex(0);
-        selectNamaCustomer.setSelectedIndex(0);
+        selectMerkKendaraan.setSelectedIndex(-1);
+        selectNamaCustomer.setSelectedIndex(-1);
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void inputLamaSewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputLamaSewaActionPerformed

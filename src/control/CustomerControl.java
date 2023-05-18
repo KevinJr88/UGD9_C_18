@@ -13,6 +13,7 @@ import dao.CustomerDAO;
 import java.util.List;
 import model.Customer;
 import model.Kendaraan;
+import model.Penyewaan;
 import table.TableCustomer;
 
 public class CustomerControl {

@@ -12,6 +12,7 @@ Michael Kevin Kimyuwono - 210711056
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import model.Penyewaan;
+import model.Customer;
 
 public class TablePenyewaan extends AbstractTableModel{
     private List<Penyewaan> list;

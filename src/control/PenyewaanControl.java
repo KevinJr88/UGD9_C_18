@@ -11,6 +11,8 @@ Michael Kevin Kimyuwono - 210711056
 
 import dao.PenyewaanDAO;
 import java.util.List;
+import model.Customer;
+import model.Kendaraan;
 import model.Penyewaan;
 import table.TablePenyewaan;
 
@@ -31,7 +33,7 @@ public class PenyewaanControl {
         pDao.updatePenyewaan(p);
     }
     
-    public void deleteDataPenyewaan(String id){
+    public void deleteDataPenyewaan(int id){
         pDao.deletePenyewaan(id);
     }
 }

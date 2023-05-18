@@ -18,7 +18,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.Kendaraan;
-
+import model.Penyewaan;
 
 public class KendaraanDAO {
    private DbConnection dbCon = new DbConnection();

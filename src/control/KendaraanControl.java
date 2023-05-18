@@ -12,7 +12,9 @@ package control;
 
 import dao.KendaraanDAO;
 import java.util.List;
+import model.Customer;
 import model.Kendaraan;
+import model.Penyewaan;
 
 
 public class KendaraanControl {

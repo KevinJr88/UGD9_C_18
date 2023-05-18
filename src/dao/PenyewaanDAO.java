@@ -128,21 +128,11 @@ public class PenyewaanDAO {
         dbCon.closeConnection();
     }
     
-    public void deletePenyewaan(String query){
+    public void deletePenyewaan(int query){
         con = dbCon.makeConnection();
         
    
-        String sql = "DELETE p.* FROM penyewaan as p JOIN kendaraan as k ON p.id_kendaraan = k.id "
-                + "JOIN customer as c ON p.id_customer = c.id "
-                + "WHERE (k.merk LIKE "
-                +"'%" + query + "%'"
-                + "OR k.jenis LIKE '%" + query + "%'"
-                + "OR c.nama LIKE '%" + query + "%'"
-                + "OR p.lama_sewa LIKE '%" + query + "%'"
-                + "OR p.total_harga LIKE '%" + query + "%'"
-                + "OR p.fasilitas LIKE '%" + query + "%'"
-                + "OR k.jumlah_penumpang LIKE '%" + query + "%'"
-                + "OR k.jenis_tak LIKE '%" + query + "%')" ;
+        String sql = "DELETE FROM penyewaan WHERE id = " + query + "";
         System.out.println("Deleting penyewaan ...");
         
         try{
