@@ -668,6 +668,8 @@ public class PenyewaanView extends javax.swing.JFrame {
             Customer selectedCustomer = listCustomer.get(selectedIndex2);
           
             Penyewaan py = new Penyewaan(inputLamaSewa.getText(), Float.parseFloat(inputTotalHarga.getText()) , snack+", "+masker+ ", "+tissue, selectedKendaraan, selectedCustomer );
+          
+            penyewaanControl.insertPenyewaan(py);
             clearText();
             showPenyewaan();
             setComponent(false);
