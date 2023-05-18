@@ -19,9 +19,22 @@ import table.TableCustomer;
 public class CustomerControl {
     private CustomerDAO cDao = new CustomerDAO();
     
+    public void insertDataCustomer(Customer c){
+        cDao.insertCustomer(c);
+    }
     
     public TableCustomer showCustomer(String query){
         List<Customer> dataCustomer = cDao.showCustomer();
+        TableCustomer tableCustomer = new TableCustomer(dataCustomer);
+        return tableCustomer;
+    }
+    
+    public void updateDataCustomer(Customer c, int idCustomer){
+        cDao.updateCustomer(c, idCustomer);
+    }
+    
+    public TableCustomer showCustomerBySearch(String query){
+        List<Customer> dataCustomer = cDao.showCustomerBySearch(query);
         TableCustomer tableCustomer = new TableCustomer(dataCustomer);
         return tableCustomer;
     }
@@ -31,4 +44,7 @@ public class CustomerControl {
         return customer;
     }
     
+     public void deleteCustomer(int id){
+         cDao.deleteCustomer(id);
+     }
 }

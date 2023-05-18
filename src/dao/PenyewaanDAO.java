@@ -138,7 +138,7 @@ public class PenyewaanDAO {
         try{
             Statement statement = con.createStatement();
             int result = statement.executeUpdate(sql);
-            System.out.println("Delete " + result + " Mata Kuliah " + query);
+            System.out.println("Delete " + result + " Penyewaan " + query);
             statement.close();
         } catch(Exception e){
             System.out.println("Error deleting penyewaan ...");
